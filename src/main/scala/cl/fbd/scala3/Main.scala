@@ -4,7 +4,7 @@ import util.boundary, boundary.break
 
 @main
 def main () = 
-    println ("hola pruebas scala 3")
+    println ("Pruebas con scala 3.3.1 y scala-native 0.4.15")
 
     val list = "abc" :: "123" :: "xyz" :: "a8b1" :: Nil
 
