@@ -1,19 +1,32 @@
 package cl.fbd.scala3
 
-import util.boundary, boundary.break
+import scala.concurrent.{ Future, ExecutionContext }
+import scala.concurrent.duration.Duration
+import java.util.concurrent.TimeUnit
+import scala.concurrent.Await
 
 @main
 def main () = 
-    println ("Pruebas con scala 3.3.1 y scala-native 0.4.15")
+    println ("Pruebas con scala 3.3.1, scala-native 0.4.15")
+    println ("API concurrencia")
 
-    val list = "abc" :: "123" :: "xyz" :: "a8b1" :: Nil
+    given ExecutionContext = ExecutionContext.global
 
-    val primeraCadenaConDigito = boundary:
-        for sz <- list do
-            println (sz)
+    val f = Future:
+        slowOp ()
 
-            if sz.exists (Character.isDigit) then break (sz)
+    println (s"main thread")
 
-        "ninguna cadena contiene digitos"
+    val maxWaitTime = Duration(30, TimeUnit.SECONDS)
 
-    println (s"La primera cadena que contiene digitos es $primeraCadenaConDigito")
+    val ret = Await.result(f, maxWaitTime)
+
+    println (s"ret = ${ret}")
+
+    
+def slowOp (): Int =
+    println ("Slow op start")
+    Thread.sleep (1000)
+    println ("Slow op end")
+
+    1
