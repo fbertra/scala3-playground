@@ -6,10 +6,11 @@ version := "0.0.1"
 
 scalaVersion := "3.3.1"
 
-enablePlugins(ScalaNativePlugin)
+// enablePlugins(ScalaNativePlugin)
 
 logLevel := Level.Info
 
+/*
 import scala.scalanative.build._
 
 nativeConfig ~= { c =>
@@ -17,3 +18,4 @@ nativeConfig ~= { c =>
     .withMode(Mode.debug) // releaseFast
     .withGC(GC.immix) // commix
 }
+*/

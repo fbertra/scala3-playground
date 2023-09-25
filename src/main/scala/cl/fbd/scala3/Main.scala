@@ -7,7 +7,7 @@ import scala.concurrent.Await
 
 @main
 def main () = 
-    println ("Pruebas con scala 3.3.1, scala-native 0.4.15")
+    println ("Pruebas con scala 3.3.1, vuelta a la JVM, future") // , scala-native 0.4.15
     println ("API concurrencia")
 
     given ExecutionContext = ExecutionContext.global
@@ -26,7 +26,7 @@ def main () =
     
 def slowOp (): Int =
     println ("Slow op start")
-    Thread.sleep (1000)
+    Thread.sleep (5000)
     println ("Slow op end")
 
     1
