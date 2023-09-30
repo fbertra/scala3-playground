@@ -7,8 +7,7 @@ import scala.concurrent.Await
 
 @main
 def main () = 
-    println ("Pruebas con scala 3.3.1, vuelta a la JVM, future") // , scala-native 0.4.15
-    println ("API concurrencia")
+    println ("Test scala 3.3.0, scala-native 0.5.0-SNAPSHOT, API Future")
 
     given ExecutionContext = ExecutionContext.global
 

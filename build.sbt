@@ -4,13 +4,16 @@ name := "fbd-scala3-pruebas"
 
 version := "0.0.1"
 
-scalaVersion := "3.3.1"
+ScalaNativePlugin.projectSettings
 
-// enablePlugins(ScalaNativePlugin)
+resolvers := Resolver.sonatypeOssRepos("snapshots")
+
+scalaVersion := "3.3.0"
+
+enablePlugins(ScalaNativePlugin)
 
 logLevel := Level.Info
 
-/*
 import scala.scalanative.build._
 
 nativeConfig ~= { c =>
@@ -18,4 +21,3 @@ nativeConfig ~= { c =>
     .withMode(Mode.debug) // releaseFast
     .withGC(GC.immix) // commix
 }
-*/
