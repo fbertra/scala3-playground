@@ -22,11 +22,10 @@ def main () =
     val sz = write (pa)
 
     val pokemons = callPokemonAbility (5)
+    println (pokemons)
 
-    pokemons.foreach (println (_))
 
-
-def callPokemonAbility (limit: Int): Seq [PokemonSvc] =
+def callPokemonAbility (limit: Int): PokemonSvc =
     val pokemonApiURL = uri"https://pokeapi.co/api/v2/pokemon?limit=${limit}"
     val pokemonAbilityURL = "https://pokeapi.co/api/v2/ability/"
 
@@ -36,5 +35,5 @@ def callPokemonAbility (limit: Int): Seq [PokemonSvc] =
 
     println (response.body)
 
-    read [Seq [PokemonSvc]] (response.body)    
+    read [PokemonSvc] (response.body)    
     

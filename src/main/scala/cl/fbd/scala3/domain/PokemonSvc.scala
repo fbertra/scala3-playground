@@ -4,7 +4,7 @@ import upickle.default.*
 
 case class PokemonSvc(
   count: Integer,
-  next: Option [String],
-  previous: Option [String],
+  next: String | Null,
+  previous: String | Null,
   results: Seq [PokemonData]    
 ) derives ReadWriter
