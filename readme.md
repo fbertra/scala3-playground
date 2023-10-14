@@ -1,3 +1,9 @@
+## Notes on branches
+
+- main: JVM, API toolkit (sttp, upickle)
+- sn_0_4: scala-native 0.4.x, API toolkit
+- sn_native_0_5_snapshot: scala-native 0.5, multi-threading with API Future
+
 ## Notes on testing multi-threading on scala-native 0.5.0 snapshot
 
 - configure sonatype snapshots in build.sbt AND project/plugin.sbt,
@@ -6,7 +12,6 @@
 TO-DO: test multi-threading and toolkit API's (upickle, sttp, os-lib):
 - invoke a REST API (pokemon?)
 - read a file
-
 
 ## Notes on gitpod VM configuration
 
