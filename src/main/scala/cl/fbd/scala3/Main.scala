@@ -11,7 +11,7 @@ import cl.fbd.scala3.domain.PokemonSvc
 
 @main
 def main () = 
-    println ("test scala-native 0.4.15 + libs toolkit (sttp, upickle)")
+    println ("test scala 3.3.1 JVM + libs toolkit (sttp, upickle)")
 
     val pa = PokemonAblility (
         id = 1,
