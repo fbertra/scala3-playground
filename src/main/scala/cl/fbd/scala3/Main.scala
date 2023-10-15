@@ -9,11 +9,11 @@ import concurrent.duration.DurationInt
 
 import sttp.client4.quick.*
 import sttp.client4.Response
+import sttp.model.Uri
 
 import cl.fbd.scala3.domain.PokemonAblility
 import cl.fbd.scala3.domain.PokemonSrv
 import cl.fbd.scala3.domain.PokemonData
-import sttp.model.Uri
 
 @main
 def main (limit: Int) = 
@@ -34,9 +34,7 @@ def getPokemonsAbility (limit: Int): Seq [PokemonAblility] =
 
     val all = Future.sequence(futures)
 
-    val wait_time = 10.seconds
-
-    Await.result(all, wait_time)
+    Await.result(all, 10.seconds)
 
 def callPokemonSrv (limit: Int) =
     val response_body = call (uri"https://pokeapi.co/api/v2/pokemon?limit=${limit}")
