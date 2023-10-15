@@ -1,8 +1,12 @@
 ## Notes on branches
 
-- main: JVM, API toolkit (sttp, upickle)
+- main: JVM, multi-threading with API Future, API toolkit (sttp, upickle)
 - sn_0_4: scala-native 0.4.x, API toolkit
 - sn_native_0_5_snapshot: scala-native 0.5, multi-threading with API Future
+
+## Notes on testing multi-threading on JVM
+
+TO-DO: error management
 
 ## Notes on testing multi-threading on scala-native 0.5.0 snapshot
 
