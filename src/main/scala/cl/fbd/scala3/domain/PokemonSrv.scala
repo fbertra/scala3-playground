@@ -2,7 +2,7 @@ package cl.fbd.scala3.domain
 
 import upickle.default.*
 
-case class PokemonSvc(
+case class PokemonSrv (
   count: Integer,
   next: String | Null,
   previous: String | Null,

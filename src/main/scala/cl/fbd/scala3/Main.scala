@@ -2,59 +2,64 @@ package cl.fbd.scala3
 
 import upickle.default.*
 
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext
+import scala.concurrent.Await
+import concurrent.duration.DurationInt
+
 import sttp.client4.quick.*
 import sttp.client4.Response
 
 import cl.fbd.scala3.domain.PokemonAblility
-import cl.fbd.scala3.domain.PokemonSvc
+import cl.fbd.scala3.domain.PokemonSrv
 import cl.fbd.scala3.domain.PokemonData
-
+import sttp.model.Uri
 
 @main
-def main () = 
-    println ("test scala 3.3.1 JVM + libs toolkit (sttp, upickle)")
+def main (limit: Int) = 
+    println ("test scala 3.3.1 JVM + API Future + lib toolkit (sttp, upickle)")
 
-    val pa = PokemonAblility (
-        id = 1,
-        name = "test",
-        is_main_series = false
-    )
+    val pokemons = getPokemonsAbility (limit)
 
-    val sz = write (pa)
+    for pokemon <- pokemons do
+        println (pokemon)
 
-    // testParse ()
+def getPokemonsAbility (limit: Int): Seq [PokemonAblility] =
+    val pokemon_srv = callPokemonSrv (limit)
+   
+    given ExecutionContext = ExecutionContext.global
 
-    val pokemons = callPokemonAbility (5)
-    println (pokemons)
+    val futures = for pokemon <- pokemon_srv.results yield
+      Future (callPokemonAbility (pokemon))
 
-def testParse () =
-    val test = """{"name":"bulbasaur","url":"https://pokeapi.co/api/v2/pokemon/1/"}"""
+    val all = Future.sequence(futures)
 
-    println ("one")
-    val res = read [PokemonData] (test)    
-    println (res)
+    val wait_time = 10.seconds
 
-    println ("seq")
-    val test_seq = """[{"name":"bulbasaur","url":"https://pokeapi.co/api/v2/pokemon/1/"},{"name":"ivysaur","url":"https://pokeapi.co/api/v2/pokemon/2/"}]"""
-    val res_seq = read [Seq [PokemonData]] (test_seq)    
-    println (res_seq.mkString ("\n"))
+    Await.result(all, wait_time)
 
-    println ("srv")
-                    //01234567890123456789
-    val test_srv = """{"count":1292,"next":"https://pokeapi.co/api/v2/pokemon?offset=5&limit=5","previous":null,"results":[{"name":"bulbasaur","url":"https://pokeapi.co/api/v2/pokemon/1/"},{"name":"ivysaur","url":"https://pokeapi.co/api/v2/pokemon/2/"},{"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},{"name":"charmander","url":"https://pokeapi.co/api/v2/pokemon/4/"},{"name":"charmeleon","url":"https://pokeapi.co/api/v2/pokemon/5/"}]}"""
-    read [PokemonSvc] (test_srv) 
-    println (test_srv)
+def callPokemonSrv (limit: Int) =
+    val response_body = call (uri"https://pokeapi.co/api/v2/pokemon?limit=${limit}")
 
+    read [PokemonSrv] (response_body) 
 
-def callPokemonAbility (limit: Int): PokemonSvc =
-    val pokemonApiURL = uri"https://pokeapi.co/api/v2/pokemon?limit=${limit}"
-    val pokemonAbilityURL = "https://pokeapi.co/api/v2/ability/"
+def callPokemonAbility (pokemonData: PokemonData) =
+    val urlSplitted = pokemonData.url.split ("/")
 
+    val id = urlSplitted (urlSplitted.length - 1)    
+    
+    val response_body = call (uri"https://pokeapi.co/api/v2/ability/${id}")
+
+    read [PokemonAblility] (response_body) 
+
+def call (uri: Uri): String =
     val response: Response[String] = quickRequest
-        .get(pokemonApiURL)
-        .send()
+        .get (uri)
+        .send ()
 
-    println (response.body)
+    println (s"${uri} ->\n ${response.body}")
 
-    read [PokemonSvc] (response.body)    
+    response.body
+
+
     
