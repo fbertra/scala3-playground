@@ -4,7 +4,8 @@ name := "fbd-scala3-pruebas"
 
 version := "0.0.1"
 
-// scalaVersion := "3.3.0"
+// [info]  published ivy to /home/gitpod/.ivy2/local/ch.epfl.lamp/gears_3/0.1.0-SNAPSHOT/ivys/ivy.xml
+libraryDependencies += "ch.epfl.lamp" %% "gears" % "0.1.0-SNAPSHOT"
 
 scalaVersion := "3.3.1"
 

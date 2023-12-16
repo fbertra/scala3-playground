@@ -15,6 +15,8 @@ import cl.fbd.scala3.domain.PokemonAblility
 import cl.fbd.scala3.domain.PokemonSrv
 import cl.fbd.scala3.domain.PokemonData
 
+import gears.async.default.given
+
 @main
 def main(limit: Int) =
   println("test scala 3.3.1 JVM + API Future + lib toolkit (sttp, upickle)")
