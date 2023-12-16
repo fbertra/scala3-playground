@@ -3,9 +3,9 @@ package cl.fbd.scala3
 import upickle.default.*
 
 // import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
+// import scala.concurrent.ExecutionContext
 // import scala.concurrent.Await
-import concurrent.duration.DurationInt
+// import concurrent.duration.DurationInt
 
 import sttp.client4.quick.*
 import sttp.client4.Response
@@ -31,7 +31,7 @@ def main(limit: Int) =
 def getPokemonsAbility(limit: Int): Seq[PokemonAblility] =
   val pokemon_srv = callPokemonSrv(limit)
 
-  given ExecutionContext = ExecutionContext.global
+  // given ExecutionContext = ExecutionContext.global
 
   Async.blocking:
     val futures = for pokemon <- pokemon_srv.results yield Future(callPokemonAbility(pokemon))
